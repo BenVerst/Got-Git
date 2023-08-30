@@ -10,6 +10,7 @@ library(janitor)
 ```
 
 ```{r}
+#read in data from the four datasets
 prm_data <- read_csv("/courses/EDS214/group_project/got_git/got_git_data/RioMameyesPuenteRoto.csv") %>% 
   clean_names()
 
@@ -21,13 +22,17 @@ bq2_data <- read_csv("/courses/EDS214/group_project/got_git/got_git_data/Quebrad
 
 bq3_data <- read_csv("/courses/EDS214/group_project/got_git/got_git_data/QuebradaCuenca3-Bisley.csv") %>% 
   clean_names()
+
 ```
 
 ```{r}
+#full join all the datasets into one big dataset.
+#selected only sample_data, no3, k, site to look at
 all_sites_data <- full_join(prm_data, bq1_data) %>% 
   full_join(bq2_data) %>% 
   full_join(bq3_data) %>% 
-  select(sample_date, no3_n, k)
+  select(sample_date, no3_n, k, sample_id)
+
 ```
 
 ```{}
