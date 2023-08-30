@@ -1,0 +1,9 @@
+---
+title: "Plot replication"
+format: html
+editor: visual
+---
+
+```{r}
+library(tidyverse)
+```
