@@ -24,7 +24,11 @@ bq3_data <- read_csv("/courses/EDS214/group_project/got_git/got_git_data/Quebrad
 ```
 
 ```{r}
-all_sites_data <- viewfull_join(prm_data, bq1_data) %>% 
+all_sites_data <- full_join(prm_data, bq1_data) %>% 
   full_join(bq2_data) %>% 
-  full_join(bq3_data)
+  full_join(bq3_data) %>% 
+  select(sample_date, no3_n, k)
+```
+
+```{}
 ```
