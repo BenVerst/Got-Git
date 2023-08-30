@@ -6,4 +6,25 @@ editor: visual
 
 ```{r}
 library(tidyverse)
+library(janitor)
+```
+
+```{r}
+prm_data <- read_csv("/courses/EDS214/group_project/got_git/got_git_data/RioMameyesPuenteRoto.csv") %>% 
+  clean_names()
+
+bq1_data <- read_csv("/courses/EDS214/group_project/got_git/got_git_data/QuebradaCuenca1-Bisley.csv") %>% 
+  clean_names()
+
+bq2_data <- read_csv("/courses/EDS214/group_project/got_git/got_git_data/QuebradaCuenca2-Bisley.csv") %>% 
+  clean_names()
+
+bq3_data <- read_csv("/courses/EDS214/group_project/got_git/got_git_data/QuebradaCuenca3-Bisley.csv") %>% 
+  clean_names()
+```
+
+```{r}
+all_sites_data <- viewfull_join(prm_data, bq1_data) %>% 
+  full_join(bq2_data) %>% 
+  full_join(bq3_data)
 ```
