@@ -2,7 +2,7 @@
 
 # EDS 214 Group Project
 
-#### Contributors: Ben Versteeg, Hazel Vaquero, Linus Ghanadan, Patty Park, Amanda Herbst
+#### Contributors: Ben Versteeg, Hazel Vaquero, [Linus Ghanadan](https://github.com/linusghanadan), Patty Park, Amanda Herbst
 
 ## Objectives:
 
