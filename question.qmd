@@ -1,0 +1,46 @@
+---
+title: "eds214-question"
+format: html
+editor: visual
+---
+
+```{r}
+#joining data and filtering by sample date, no3, k, sample_id, temp ,gage_ht
+all_sites_data_temp <- full_join(prm_data, bq1_data) %>% 
+  full_join(bq2_data) %>% 
+  full_join(bq3_data) %>% 
+  select(sample_date, no3_n, k, sample_id, p_h, temp, gage_ht)
+
+#looking at data to make questions
+#comparing temperature and pH
+temp_ph <- ggplot(data = all_sites_data_temp, aes(x = p_h, y = temp)) + 
+  geom_line()
+temp_ph
+
+#comparing temperature and gage height
+temp_gage <- ggplot(data = all_sites_data_temp, aes(x = gage_ht, y = temp)) + 
+  geom_line()
+temp_gage
+
+#comparing temperature and year
+temp_year <- ggplot(data = all_sites_data_temp, aes(x = sample_date, y = temp)) + 
+  geom_line()
+temp_year
+
+#comparing temperature and nitrate
+temp_nitrate <- temp_year <- ggplot(data = all_sites_data_temp, aes(y = no3_n, x = temp)) + 
+  geom_line(aes(color = sample_id)) + 
+  facet_wrap(~sample_id) + 
+  labs(x = "Temperature(C)", y = "Nitrate Concentration ('put units here')")
+temp_nitrate
+
+#comparing temperature and potassium
+temp_potassium <- temp_year <- ggplot(data = all_sites_data_temp, aes(y = k, x = temp)) + 
+  geom_line(aes(color = sample_id)) + 
+  facet_wrap(~sample_id) + 
+  labs(x = "Temperature(C)", y = "Potassium Concentration ('put units here')")
+temp_potassium
+
+#Stack the plots using Patchwork package
+temp_potassium / temp_nitrate
+```
