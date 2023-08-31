@@ -6,7 +6,9 @@ editor: visual
 
 ```{r}
 library(tidyverse)
+library(zoo)
 library(janitor)
+library(patchwork)
 ```
 
 ```{r}
@@ -32,5 +34,43 @@ all_sites_data <- full_join(prm_data, bq1_data) %>%
   full_join(bq2_data) %>% 
   full_join(bq3_data) %>% 
   select(sample_date, no3_n, k, sample_id)
+```
 
+```{r}
+# Make the plot!
+
+# filter data set to dates between 1988 and 1994 
+all_sites_1988_to_1994 <- all_sites_data %>% 
+  mutate(year = lubridate::year(sample_date)) %>% 
+  filter(year %in% c(1988:1994)) 
+
+# Plot NO3-N data
+no3_n_plot <- ggplot(data = all_sites_1988_to_1994, aes(x = sample_date, y = no3_n)) + 
+    geom_line(aes(color = sample_id)) +
+  labs(x = "Years", y = "NO3-N (ug / L)") +
+  theme(legend.position = c(0.95,0.75),
+        legend.key.size = unit(0.5, "line"),
+        legend.title = element_blank())
+
+# Plot K data
+k_plot <- ggplot(data = all_sites_1988_to_1994, aes(x = sample_date, y = k)) + 
+    geom_line(aes(color = sample_id), show.legend = FALSE) +
+  labs(x = "", y = "K (mg / L)")
+
+# Stack the plots on top of each other (using patchwork package)
+k_plot / no3_n_plot
+```
+
+
+```{r}
+# Attempting moving average 
+
+# all_sites_data %>% 
+#   mutate(year = lubridate::year(sample_date)) %>% 
+#   filter(year %in% c(1988:1994)) %>%
+#   mutate(month = lubridate::month(sample_date)) %>% 
+#   group_by(month, year, sample_id) %>% 
+#   summarize(mean = mean(no3_n, na.rm = TRUE)) %>% 
+#   ggplot(aes(x = year, y = mean)) +
+#   geom_jitter(aes(color = sample_id))
 ```
