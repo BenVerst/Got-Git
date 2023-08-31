@@ -9,6 +9,7 @@ library(tidyverse)
 library(zoo)
 library(janitor)
 library(patchwork)
+library(here)
 ```
 
 ```{r}
@@ -58,9 +59,11 @@ k_plot <- ggplot(data = all_sites_1988_to_1994, aes(x = sample_date, y = k)) +
   labs(x = "", y = "K (mg / L)")
 
 # Stack the plots on top of each other (using patchwork package)
-k_plot / no3_n_plot
-```
+recreated_plot <- k_plot / no3_n_plot
 
+# Save plot
+ggsave(filename = here::here("recreated_plot.jpg"), plot = recreated_plot)
+```
 
 ```{r}
 # Attempting moving average 
