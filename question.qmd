@@ -1,39 +1,8 @@
 ---
-title: "Plot replication"
+title: "eds214-question"
 format: html
 editor: visual
 ---
-
-```{r}
-library(tidyverse)
-library(janitor)
-```
-
-```{r}
-#read in data from the four datasets
-prm_data <- read_csv("/courses/EDS214/group_project/got_git/got_git_data/RioMameyesPuenteRoto.csv") %>% 
-  clean_names()
-
-bq1_data <- read_csv("/courses/EDS214/group_project/got_git/got_git_data/QuebradaCuenca1-Bisley.csv") %>% 
-  clean_names()
-
-bq2_data <- read_csv("/courses/EDS214/group_project/got_git/got_git_data/QuebradaCuenca2-Bisley.csv") %>% 
-  clean_names()
-
-bq3_data <- read_csv("/courses/EDS214/group_project/got_git/got_git_data/QuebradaCuenca3-Bisley.csv") %>% 
-  clean_names()
-
-```
-
-```{r}
-#full join all the datasets into one big dataset.
-#selected only sample_data, no3, k, site to look at
-all_sites_data <- full_join(prm_data, bq1_data) %>% 
-  full_join(bq2_data) %>% 
-  full_join(bq3_data) %>% 
-  select(sample_date, no3_n, k, sample_id)
-
-```
 
 ```{r}
 #joining data and filtering by sample date, no3, k, sample_id, temp ,gage_ht
@@ -75,6 +44,3 @@ temp_potassium
 #Stack the plots using Patchwork package
 temp_potassium / temp_nitrate
 ```
-
-
-
