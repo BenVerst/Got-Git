@@ -26,12 +26,12 @@ bq3_data <- read_csv("/courses/EDS214/group_project/got_git/got_git_data/Quebrad
 ```
 
 ```{r}
-#full join all the datasets into one big dataset.
-#selected only sample_data, no3, k, site to look at
-all_sites_data <- full_join(prm_data, bq1_data) %>% 
-  full_join(bq2_data) %>% 
-  full_join(bq3_data) %>% 
-  select(sample_date, no3_n, k, sample_id)
+# #full join all the datasets into one big dataset.
+# #selected only sample_data, no3, k, site to look at
+# all_sites_data <- full_join(prm_data, bq1_data) %>% 
+#   full_join(bq2_data) %>% 
+#   full_join(bq3_data) %>% 
+#   select(sample_date, no3_n, k, sample_id)
 
 ```
 
@@ -60,18 +60,34 @@ temp_year
 
 #comparing temperature and nitrate
 temp_nitrate <- temp_year <- ggplot(data = all_sites_data_temp, aes(y = no3_n, x = temp)) + 
-  geom_line(aes(color = sample_id)) + 
+  geom_point(aes(color = sample_id), alpha = 0.5, size = 1.3, show.legend = FALSE) + 
   facet_wrap(~sample_id) + 
-  labs(x = "Temperature(C)", y = "Nitrate Concentration ('put units here')")
+  geom_smooth()+
+  labs(x = "Temperature(C)", y = "Nitrate Concentration (ug / L)")
 temp_nitrate
 
 #comparing temperature and potassium
 temp_potassium <- temp_year <- ggplot(data = all_sites_data_temp, aes(y = k, x = temp)) + 
-  geom_line(aes(color = sample_id)) + 
+  geom_point(aes(color = sample_id), alpha = 0.5, size = 1.3, show.legend = FALSE) + 
   facet_wrap(~sample_id) + 
-  labs(x = "Temperature(C)", y = "Potassium Concentration ('put units here')")
+  # theme(legend.title = element_blank(),
+  #       legend.position = "top",
+  #       legend.justification = "center") +
+  geom_smooth() + 
+  labs(x = "Temperature(C)", y = "Potassium Concentration (mg / L)")
 temp_potassium
 
+# temp_chlorine <- temp_year <- ggplot(data = all_sites_data_temp, aes(y = no3_n, x = temp)) + 
+#   geom_point(aes(color = sample_id)) + 
+#   facet_wrap(~sample_id) + 
+#   labs(x = "Temperature(C)", y = "Nitrate Concentration ('put units here')")
+# temp_
+
 #Stack the plots using Patchwork package
-temp_potassium / temp_nitrate
+k_no3_plot <- temp_potassium + temp_nitrate
+k_no3_plot
+
+ggsave(filename = here::here("figures", "k_no3_temp.jpg"), plot = k_no3_plot, width = 9)
+ggsave(filename = here::here("figures", "no3_temp.jpg"), plot = temp_nitrate, width = 8)
+ggsave(filename = here::here("figures", "K_temp.jpg"), plot = temp_potassium)
 ```
