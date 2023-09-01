@@ -14,8 +14,9 @@
 -  Includes data wrangling from the four Bisley streams watersheds: MPR, BQ1, BQ2, BQ3
 -  Recreated graph using a nine-week rolling average
 
-#### Graph recreated:
-![image](
+#### Graphs recreated:
+![image](https://github.com/BenVerst/Got-Git/blob/main/recreated_plot.jpg?raw=true)
+![image](https://github.com/BenVerst/Got-Git/blob/main/recreated_plot_ma.jpg?raw=true)
 
 #### Reference:
 #### Schaefer, D., McDowell, W., Scatena, F., & Asbury, C. (2000). Effects of hurricane disturbance on stream water concentrations and fluxes in eight tropical forest watersheds of the Luquillo Experimental Forest, Puerto Rico. Journal of Tropical Ecology, 16(2), 189-207. <doi:10.1017/S0266467400001358>
@@ -23,4 +24,7 @@
 #### 2. Define and explore our own question! (Found in question.qmd)
 #### Question asked: How does temperature at each site affect nitrate and potassium concentrations?
 #### Quarto document includes data exploration and preliminary plots on the effects of temperature on various parameters.
+
+#### Graph created
+![image](https://github.com/BenVerst/Got-Git/blob/main/figures/k_no3_temp.jpg?raw=true)
 
