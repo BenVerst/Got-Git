@@ -70,7 +70,6 @@ recreated_plot
 ggsave(filename = here::here("recreated_plot.jpg"), 
        plot = recreated_plot, width = 10 )
 
-```{r}
 # Attempting moving average 
 
 # all_sites_data %>% 
@@ -81,4 +80,29 @@ ggsave(filename = here::here("recreated_plot.jpg"),
 #   summarize(mean = mean(no3_n, na.rm = TRUE)) %>% 
 #   ggplot(aes(x = year, y = mean)) +
 #   geom_jitter(aes(color = sample_id))
+```
+
+```{r}
+# Create data set during same time period used in the paper
+all_sites_1988_to_1994 <- all_sites_data %>% 
+  mutate(year = lubridate::year(sample_date)) %>% 
+  filter(year %in% c(1988:1994)) 
+
+# load tidyquant to use geom_ma()
+library(tidyquant)
+
+# Plot moving average of nitrate over time
+all_sites_1988_to_1994 %>% 
+  ggplot(aes(x = sample_date, y = no3_n)) +
+  # geom_line(aes(color = sample_id)) +
+  geom_ma(ma_fun = SMA, n = 63, aes(color = sample_id))           
+
+# Example code of using geom_ma()
+# AAPL %>%
+#     ggplot(aes(x = date, y = adjusted)) +
+#     geom_line() +                         # Plot stock price
+#     geom_ma(ma_fun = SMA, n = 50) +                 # Plot 50-day SMA
+#     geom_ma(ma_fun = SMA, n = 200, color = "red") + # Plot 200-day SMA
+#     coord_x_date(xlim = c("2016-01-01", "2016-12-31"),
+#                  ylim = c(75, 125))                     # Zoom in
 ```
