@@ -9,6 +9,7 @@ library(tidyverse)
 library(zoo)
 library(janitor)
 library(patchwork)
+library(here)
 ```
 
 ```{r}
@@ -63,8 +64,8 @@ k_plot
 
 
 # Stack the plots on top of each other (using patchwork package)
-k_plot / no3_n_plot
-```
+recreated_plot <- k_plot / no3_n_plot
+ggsave(filename = here::here("recreated_plot.jpg"), plot = recreated_plot)
 
 ```{r}
 # Attempting moving average 
