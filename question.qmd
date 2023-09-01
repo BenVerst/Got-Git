@@ -9,6 +9,7 @@ library(tidyverse)
 library(janitor)
 ```
 
+# Read in Data
 ```{r}
 #read in data from the four datasets
 prm_data <- read_csv("/courses/EDS214/group_project/got_git/got_git_data/RioMameyesPuenteRoto.csv") %>% 
@@ -35,13 +36,17 @@ bq3_data <- read_csv("/courses/EDS214/group_project/got_git/got_git_data/Quebrad
 
 ```
 
+# Join data
 ```{r}
 #joining data and filtering by sample date, no3, k, sample_id, temp ,gage_ht
 all_sites_data_temp <- full_join(prm_data, bq1_data) %>% 
   full_join(bq2_data) %>% 
   full_join(bq3_data) %>% 
   select(sample_date, no3_n, k, sample_id, p_h, temp, gage_ht)
+```
 
+# Making various graphs
+```{r}
 #looking at data to make questions
 #comparing temperature and pH
 temp_ph <- ggplot(data = all_sites_data_temp, aes(x = p_h, y = temp)) + 
@@ -77,17 +82,32 @@ temp_potassium <- temp_year <- ggplot(data = all_sites_data_temp, aes(y = k, x =
   labs(x = "Temperature(C)", y = "Potassium Concentration (mg / L)")
 temp_potassium
 
-# temp_chlorine <- temp_year <- ggplot(data = all_sites_data_temp, aes(y = no3_n, x = temp)) + 
-#   geom_point(aes(color = sample_id)) + 
-#   facet_wrap(~sample_id) + 
-#   labs(x = "Temperature(C)", y = "Nitrate Concentration ('put units here')")
-# temp_
 
 #Stack the plots using Patchwork package
 k_no3_plot <- temp_potassium + temp_nitrate
 k_no3_plot
 
+#saved the graphs in a jpg
 ggsave(filename = here::here("figures", "k_no3_temp.jpg"), plot = k_no3_plot, width = 9)
 ggsave(filename = here::here("figures", "no3_temp.jpg"), plot = temp_nitrate, width = 8)
 ggsave(filename = here::here("figures", "K_temp.jpg"), plot = temp_potassium)
+```
+
+# playing with data
+```{r}
+#Playing data with DOC
+
+#combining all data with doc added
+all_sites_data_temp <- full_join(prm_data, bq1_data) %>% 
+  full_join(bq2_data) %>% 
+  full_join(bq3_data) %>% 
+  select(sample_date, no3_n, k, sample_id, p_h, temp, gage_ht, doc)
+
+#created graph with doc and sample date
+temp_doc <- ggplot(data = all_sites_data_temp, aes(y = doc, x = sample_date)) +
+  geom_point(aes(color = sample_id)) +
+  facet_wrap(~sample_id) +
+  labs(x = "Temperature(C)", y = "Nitrate Concentration ('put units here')")
+temp_doc
+
 ```
