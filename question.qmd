@@ -10,6 +10,8 @@ execute:
 ```{r}
 library(tidyverse)
 library(janitor)
+library(patchwork)
+library(here)
 ```
 
 # How does temperature at each site affect measured stream chemistry parameters?
@@ -81,9 +83,10 @@ temp_nitrate <- temp_year <- ggplot(data = all_sites_data_temp,
              size = 1.3, 
              show.legend = FALSE) + 
   facet_wrap(~sample_id) + #facet wrap depending on the sites
-  geom_smooth()+
+  geom_smooth() + 
   labs(x = "Temperature(C)", 
        y = "Nitrate Concentration (ug / L)")
+
 temp_nitrate
 
 #comparing temperature and potassium
