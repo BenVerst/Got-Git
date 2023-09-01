@@ -11,9 +11,11 @@
 
 ![image](https://github.com/BenVerst/Got-Git/assets/86419946/21bf2c3d-f0e4-4ab1-bcad-cf9b0c90483c)
 
-#### -  Includes data wrangling from the four Bisley streams watersheds: MPR, BQ1, BQ2, BQ3
-#### -  Recreated graph using a nine-week rolling average
-- test
+-  Includes data wrangling from the four Bisley streams watersheds: MPR, BQ1, BQ2, BQ3
+-  Recreated graph using a nine-week rolling average
+
+#### Graph recreated:
+![image](
 
 #### Reference:
 #### Schaefer, D., McDowell, W., Scatena, F., & Asbury, C. (2000). Effects of hurricane disturbance on stream water concentrations and fluxes in eight tropical forest watersheds of the Luquillo Experimental Forest, Puerto Rico. Journal of Tropical Ecology, 16(2), 189-207. <doi:10.1017/S0266467400001358>
