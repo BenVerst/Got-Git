@@ -50,20 +50,22 @@ no3_n_plot <- ggplot(data = all_sites_1988_to_1994, aes(x = sample_date, y = no3
     geom_line(aes(color = sample_id)) +
   labs(x = "Years", y = "NO3-N (ug / L)") +
   theme(legend.position = c(0.95,0.75),
-        legend.key.size = unit(0.5, "line"),
-        legend.title = element_blank())
+        legend.key.size = unit(0.8, "line"),
+        legend.title = element_blank()) + 
+  geom_vline(xintercept = as.numeric(as.Date("1989-09-18")),linetype = "dashed")
 
 # Plot K data
 k_plot <- ggplot(data = all_sites_1988_to_1994, aes(x = sample_date, y = k)) + 
     geom_line(aes(color = sample_id), show.legend = FALSE) +
-  labs(x = "", y = "K (mg / L)")
+  labs(x = "", y = "K (mg / L)") + 
+  geom_vline(xintercept = as.numeric(as.Date("1989-09-18")),linetype = "dashed")
+
+k_plot
+
 
 # Stack the plots on top of each other (using patchwork package)
 recreated_plot <- k_plot / no3_n_plot
-
-# Save plot
 ggsave(filename = here::here("recreated_plot.jpg"), plot = recreated_plot)
-```
 
 ```{r}
 # Attempting moving average 
