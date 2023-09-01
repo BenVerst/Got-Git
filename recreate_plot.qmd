@@ -2,6 +2,9 @@
 title: "Plot replication"
 format: html
 editor: visual
+execute: 
+  warning: FALSE
+  echo: TRUE
 ---
 
 ```{r}
@@ -51,19 +54,27 @@ all_sites_1988_to_1994 <- all_sites_data %>%
 
 ```{r}
 # Plot NO3-N data, add vertical line at time of Hurricane Hugo (Sept 18, 1989)
-no3_n_plot <- ggplot(data = all_sites_1988_to_1994, aes(x = sample_date, y = no3_n)) + 
-    geom_line(aes(color = sample_id)) +
+no3_n_plot <- ggplot(data = all_sites_1988_to_1994, 
+                     aes(x = sample_date, 
+                         y = no3_n)) + 
+  geom_line(aes(color = sample_id)) +
   labs(x = "Years", y = "NO3-N (ug / L)") +
   theme(legend.position = c(0.95,0.75),
         legend.key.size = unit(1.5, "line"),
         legend.title = element_blank()) + 
-  geom_vline(xintercept = as.numeric(as.Date("1989-09-18")),linetype = "dashed")
+  geom_vline(xintercept = as.numeric(as.Date("1989-09-18")),
+             linetype = "dashed")
 
 # Plot K data, add vertical line at time of Hurricane Hugo (Sept 18, 1989)
-k_plot <- ggplot(data = all_sites_1988_to_1994, aes(x = sample_date, y = k)) + 
-    geom_line(aes(color = sample_id), show.legend = FALSE) +
-  labs(x = "", y = "K (mg / L)") + 
-  geom_vline(xintercept = as.numeric(as.Date("1989-09-18")),linetype = "dashed")
+k_plot <- ggplot(data = all_sites_1988_to_1994, 
+                 aes(x = sample_date, 
+                     y = k)) + 
+  geom_line(aes(color = sample_id), 
+              show.legend = FALSE) +
+  labs(x = "", 
+       y = "K (mg / L)") + 
+  geom_vline(xintercept = as.numeric(as.Date("1989-09-18")),
+             linetype = "dashed")
 
 # Stack the plots on top of each other (using patchwork package)
 recreated_plot <- k_plot / no3_n_plot + plot_layout(guides = "collect")
@@ -84,23 +95,33 @@ library(tidyquant)
 ```{r}
 # Plot moving average of nitrate over time, adding vertical line at Hurricane Hugo
 no3_n_plot_ma <- all_sites_1988_to_1994 %>% 
-  ggplot(aes(x = sample_date, y = no3_n)) +
-  geom_ma(ma_fun = SMA, n = 63, aes(color = sample_id)) +
-  labs(x = "Years", y = "NO3-N (ug / L)") +
+  ggplot(aes(x = sample_date, 
+             y = no3_n)) +
+  geom_ma(ma_fun = SMA, 
+          n = 63, aes(color = sample_id)) +
+  labs(x = "Years", 
+       y = "NO3-N (ug / L)") +
   theme(legend.position = c(0.95,0.75),
         legend.key.size = unit(1.5, "line"),
         legend.title = element_blank()) + 
-  geom_vline(xintercept = as.numeric(as.Date("1989-09-18")),linetype = "solid")     
+  geom_vline(xintercept = as.numeric(as.Date("1989-09-18")),
+             linetype = "solid")     
 
 # Plot moving average of potassium over time, adding vertical line at Hurricane Hugo
-k_plot_ma <- ggplot(data = all_sites_1988_to_1994, aes(x = sample_date, y = k)) + 
-  geom_ma(ma_fun = SMA, n = 63, aes(color = sample_id), show.legend = FALSE) +
-  labs(x = "", y = "K (mg / L)") + 
-  geom_vline(xintercept = as.numeric(as.Date("1989-09-18")),linetype = "solid")
+k_plot_ma <- ggplot(data = all_sites_1988_to_1994, aes(x = sample_date, 
+                                                       y = k)) + 
+  geom_ma(ma_fun = SMA, 
+          n = 63, # taking average over 63 day period
+          aes(color = sample_id), 
+          show.legend = FALSE) +
+  labs(x = "", 
+       y = "K (mg / L)") + 
+  geom_vline(xintercept = as.numeric(as.Date("1989-09-18")),
+             linetype = "solid")
 
 # Stack Plots
 recreated_plot_ma <- k_plot_ma / no3_n_plot_ma + plot_layout(guides = "collect")
-
+recreated_plot_ma
 
 ggsave(filename = here::here("recreated_plot_ma.jpg"), 
        plot = recreated_plot_ma, width = 10 )
